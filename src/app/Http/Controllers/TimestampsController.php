@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use App\User;
 use App\Models\Timestamp;
 
-class Timestampsontroller extends Controller
+class TimestampsController extends Controller
 {
     public function punchIn()
     {
@@ -19,6 +19,7 @@ class Timestampsontroller extends Controller
          * DB
          */
         $oldTimestamp = Timestamp::where('user_id', $user->id)->latest()->first();
+        $oldTimestampDay = Carbon::today();
         if ($oldTimestamp) {
             $oldTimestampPunchIn = new Carbon($oldTimestamp->punchIn);
             $oldTimestampDay = $oldTimestampPunchIn->startOfDay();
@@ -31,6 +32,7 @@ class Timestampsontroller extends Controller
          */
         if (($oldTimestampDay == $newTimestampDay) && (empty($oldTimestamp->punchOut))){
             return redirect()->back()->with('error', 'すでに出勤打刻がされています');
+           
         }
 
         $timestamp = Timestamp::create([
