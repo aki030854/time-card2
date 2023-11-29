@@ -26,10 +26,10 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function() {
     
     Route::post('/punchin', [TimestampsController::class,"punchIn"])->name('timestamp/punchin');
-    Route::post('/timestamps/punchout', [TimestampsController::class,'punchOut'])->name('timestamp/punchout');
+    Route::post('/punchout', [TimestampsController::class,'punchOut'])->name('timestamp/punchout');
 });
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::post('/casserstart', [CassersController::class,'casserstart'])->name('casser/casserstart');
-    Route::post('/casserend', [CassersController::class,'casserend'])->name('casser/casserend');
+    Route::post('/breakstart', [CassersController::class,'breakStart'])->name('casser/breakstart');
+    Route::post('/breakend', [CassersController::class,'breakEnd'])->name('casser/breakend');
 });

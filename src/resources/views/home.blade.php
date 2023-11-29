@@ -42,14 +42,14 @@
      </ul>
     <ul>
         <li>
-            <form action="{{ route('casser/casserstart') }}" method="POST">
+            <form action="{{ route('casser/breakstart') }}" method="POST">
                 @csrf
                 @method('POST')
                 <button type="submit" class="btn btn-start">休憩開始</button>
             </form>
         </li>
         <li>
-            <form action="{{ route('casser/casserend') }}" method="POST">
+            <form action="{{ route('casser/breakend') }}" method="POST">
                 @csrf
                 @method('POST')
                 <button type="submit" class="btn btn-end">休憩終了</button>

@@ -16,8 +16,8 @@ class CreateCassersTable extends Migration
         Schema::create('cassers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->home();
-            $table->datetime('breakstart');
-            $table->datetime('breakend');
+            $table->dateTime('breakstart')->nullable();
+            $table->dateTime('breakend')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
