@@ -25,11 +25,13 @@ Route::get('/', function () {
 //Route::post('/cassers', [CasserController::class, 'store'])->name('cassers.store');
 Route::group(['middleware' => 'auth'], function() {
     
-    Route::post('/punchin', [TimestampsController::class,"punchIn"])->name('timestamp/punchin');
-    Route::post('/punchout', [TimestampsController::class,'punchOut'])->name('timestamp/punchout');
+    Route::post('/punchin', [TimestampsController::class,"punchIn"])->name('timestamp.punchin');
+    Route::patch('/punchout', [TimestampsController::class,'punchOut'])->name('timestamp.punchout');
+    Route::post('/breakstart', [CassersController::class,'breakStart'])->name('casser.breakstart');
+    Route::patch('/breakend', [CassersController::class,'breakEnd'])->name('casser.breakend');
+
+
+
 });
 
-Route::group(['middleware' => 'auth'], function() {
-    Route::post('/breakstart', [CassersController::class,'breakStart'])->name('casser/breakstart');
-    Route::post('/breakend', [CassersController::class,'breakEnd'])->name('casser/breakend');
-});
+

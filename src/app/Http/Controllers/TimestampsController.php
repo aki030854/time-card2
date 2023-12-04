@@ -19,26 +19,35 @@ class TimestampsController extends Controller
          * DB
          */
         $oldTimestamp = Timestamp::where('user_id', $user->id)->latest()->first();
-        $oldTimestampDay = Carbon::today();
+        $oldTimestampDay = NULL;
         if ($oldTimestamp) {
             $oldTimestampPunchIn = new Carbon($oldTimestamp->punchIn);
             $oldTimestampDay = $oldTimestampPunchIn->startOfDay();
         }
 
         $newTimestampDay = Carbon::today();
-
+        
         /**
          * 日付を比較する。同日付の出勤打刻で、かつ直前のTimestampの退勤打刻がされていない場合エラーを吐き出す。
          */
-        if (($oldTimestampDay == $newTimestampDay) && (empty($oldTimestamp->punchOut))){
+        if ($oldTimestampDay == $newTimestampDay){
+            if(empty($oldTimestamp->punchOut)) {
             return redirect()->back()->with('error', 'すでに出勤打刻がされています');
+        }else{
+             return redirect()->back()->with('error', 'すでに退勤済みです');
+        }
            
         }
 
-        $timestamp = Timestamp::create([
-            'user_id' => $user->id,
-            'punchIn' => Carbon::now(),
-        ]);
+        //$timestamp = Timestamp::create([
+          //  'user_id' => $user->id,
+           // 'punchIn' => Carbon::now(),
+      //  ]);
+
+      $timestamp = new Timestamp();
+      $timestamp->user_id=$user->id;
+      $timestamp->punchIn=Carbon::now();
+      $timestamp->save();
 
         return redirect()->back()->with('my_status', '出勤打刻が完了しました');
     }
