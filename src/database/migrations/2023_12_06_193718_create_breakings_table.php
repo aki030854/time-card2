@@ -20,7 +20,7 @@ class CreateBreakingsTable extends Migration
             $table->time('end_time')->nullable();
             $table->timestamps();
 
-            $table->foreign('work_id')->references('work_id')->on('works');
+            $table->foreign('work_id')->references('id')->on('works');
             
         });
     }

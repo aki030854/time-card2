@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TimestampsController;
-use App\Http\Controllers\CassersController;
+use App\Http\Controllers\WorkController;
+use App\Http\Controllers\BreakingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +25,10 @@ Route::get('/', function () {
 //Route::post('/cassers', [CasserController::class, 'store'])->name('cassers.store');
 Route::group(['middleware' => 'auth'], function() {
     
-   // Route::post('/punchin', [TimestampsController::class,"punchIn"])->name('timestamp.punchin');
-   // Route::patch('/punchout', [TimestampsController::class,'punchOut'])->name('timestamp.punchout');
-  //  Route::post('/breakstart', [CassersController::class,'breakStart'])->name('casser.breakstart');
-   // Route::patch('/breakend', [CassersController::class,'breakEnd'])->name('casser.breakend');
+    Route::post('/start_time', [WorkController::class,'start_time'])->name('work.start_time');
+    Route::patch('/end_time', [WorkController::class,'end_time'])->name('work.end_time');
+    Route::post('/start_time', [BreakingController::class,'start_time'])->name('breaking.start_time');
+    Route::patch('/end_time', [BreakingController::class,'end_time'])->name('breaking.end_time');
 
 
 

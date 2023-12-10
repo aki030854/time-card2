@@ -26,13 +26,13 @@
    <div class="timepunch-button-form">
     <ul>
         <li>
-            <form action="{{ route('timestamp.punchin') }}" method="POST">
+            <form action="{{ route('work.start_time') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-primary">出勤</button>
             </form>
         </li>
         <li>
-            <form action="{{ route('timestamp.punchout') }}" method="POST">
+            <form action="{{ route('work.end_time') }}" method="POST">
                 @csrf
                 @method('PATCH')
                 <button type="submit" class="btn btn-success">退勤</button>
@@ -41,13 +41,13 @@
      </ul>
     <ul>
         <li>
-            <form action="{{ route('casser.breakstart') }}" method="POST">
+            <form action="{{ route('breaking.start_time') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-start">休憩開始</button>
             </form>
         </li>
         <li>
-            <form action="{{ route('casser.breakend') }}" method="POST">
+            <form action="{{ route('breaking.end_time') }}" method="POST">
                 @csrf
                 @method('PATCH')
                 <button type="submit" class="btn btn-end">休憩終了</button>

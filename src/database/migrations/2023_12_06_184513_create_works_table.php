@@ -16,7 +16,7 @@ class CreateWorksTable extends Migration
         Schema::create('works', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->integer('work_id');
+            
             $table->date('work_date');
             $table->time('start_time');
             $table->time('end_time')->nullable();
