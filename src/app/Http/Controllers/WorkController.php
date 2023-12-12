@@ -22,7 +22,7 @@ class WorkController extends Controller
         $oldWorkDay = NULL;
         if ($oldWork) {
             $oldWorkstart_time = new Carbon($oldWork->start_time);
-            $oldWorkDay = $oldWork->start_time->startOfDay();
+            $oldWorkDay = $oldWorkstart_time->startOfDay();
         }
 
         $newWorkDay = Carbon::today();
@@ -39,10 +39,7 @@ class WorkController extends Controller
            
         }
 
-        //$timestamp = Timestamp::create([
-          //  'user_id' => $user->id,
-           // 'punchIn' => Carbon::now(),
-      //  ]);
+        
 
       $work = new Work();
       $work->user_id=$user->id;

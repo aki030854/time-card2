@@ -41,13 +41,13 @@
      </ul>
     <ul>
         <li>
-            <form action="{{ route('breaking.start_time') }}" method="POST">
+            <form action="{{ route('breaking.start') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-start">休憩開始</button>
             </form>
         </li>
         <li>
-            <form action="{{ route('breaking.end_time') }}" method="POST">
+            <form action="{{ route('breaking.end') }}" method="POST">
                 @csrf
                 @method('PATCH')
                 <button type="submit" class="btn btn-end">休憩終了</button>

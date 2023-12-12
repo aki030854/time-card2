@@ -19,16 +19,13 @@ use App\Http\Controllers\BreakingController;
 Route::get('/', function () {
     return view('home');
     })->middleware('auth');
-//Route::get('/works/create', [WorkController::class, 'create'])->name('works.create');
-//Route::post('/works', [WorkController::class, 'store'])->name('works.store');
-//Route::get('/cassers/create', [CasserController::class, 'create'])->name('cassers.create');
-//Route::post('/cassers', [CasserController::class, 'store'])->name('cassers.store');
+
 Route::group(['middleware' => 'auth'], function() {
     
-    Route::post('/start_time', [WorkController::class,'start_time'])->name('work.start_time');
-    Route::patch('/end_time', [WorkController::class,'end_time'])->name('work.end_time');
-    Route::post('/start_time', [BreakingController::class,'start_time'])->name('breaking.start_time');
-    Route::patch('/end_time', [BreakingController::class,'end_time'])->name('breaking.end_time');
+    Route::post('Works/start_time', [WorkController::class,'start_time'])->name('work.start_time');
+    Route::patch('Works/end_time', [WorkController::class,'end_time'])->name('work.end_time');
+    Route::post('Breakings/start_time', [BreakingController::class,'start_time'])->name('breaking.start');
+    Route::patch('Breakings/end_time', [BreakingController::class,'end_time'])->name('breaking.end');
 
 
 
