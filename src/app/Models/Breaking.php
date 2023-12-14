@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Breaking extends Model
 {
     use HasFactory;
-     protected $fillable = ['work_id', 'start_time','end_time' ];
+     protected $fillable = ['id','work_id', 'start_time','end_time' ];
 
      public function work()
     {
