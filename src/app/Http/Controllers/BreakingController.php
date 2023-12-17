@@ -14,8 +14,7 @@ class BreakingController extends Controller
     {
         //$user = Auth::user();
         $work = Work::all();
-        $breaking = Breaking::where('work_id', $work->id)->latest()->first();
-
+        
         $newBreakingDay = Carbon::today();
 
         
@@ -28,7 +27,7 @@ class BreakingController extends Controller
            // return redirect()->back()->with('error', 'すでに退勤打刻がされています');
         //  }
 
-        
+      
 
       $breaking = new Breaking();
       $breaking->work_id=$work->id;

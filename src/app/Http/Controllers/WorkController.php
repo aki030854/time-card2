@@ -5,24 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
-use App\User;
+use App\Model\User;
 use App\Models\Work;
 
 class WorkController extends Controller
 {
-    public function start_time()
+    public function punchin()
     {
         $user = Auth::user();
-
+        
         /**
          * 打刻は1日一回までにしたい 
          * DB
          */
         $oldWork = Work::where('user_id', $user->id)->latest()->first();
+        
         $oldWorkDay = NULL;
         if ($oldWork) {
-            $oldWorkstart_time = new Carbon($oldWork->start_time);
-            $oldWorkDay = $oldWorkstart_time->startOfDay();
+            $oldWorkpunchin = new Carbon($oldWork->punchin);
+            $oldWorkDay = $oldWorkpunchin->startOfDay();
         }
 
         $newWorkDay = Carbon::today();
@@ -44,22 +45,22 @@ class WorkController extends Controller
       $work = new Work();
       $work->user_id=$user->id;
       $work->work_date=Carbon::now();
-      $work->start_time=Carbon::now();
+      $work->punchin=Carbon::now();
       $work->save();
 
         return redirect()->back()->with('my_status', '出勤打刻が完了しました');
     }
 
-    public function end_time()
+    public function punchout()
     {
         $user = Auth::user();
         $work = Work::where('user_id', $user->id)->latest()->first();
 
-        if( !empty($oldwork->end_time)) {
+        if( !empty($oldwork->punchout)) {
             return redirect()->back()->with('error', '既に退勤の打刻がされているか、出勤打刻されていません');
         }
         $work->update([
-            'end_time' => Carbon::now()
+            'punchout' => Carbon::now()
         ]);
 
         return redirect()->back()->with('my_status', '退勤打刻が完了しました');

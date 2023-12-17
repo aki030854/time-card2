@@ -22,10 +22,10 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function() {
     
-    Route::post('Works/start_time', [WorkController::class,'start_time'])->name('work.start_time');
-    Route::patch('Works/end_time', [WorkController::class,'end_time'])->name('work.end_time');
-    Route::post('Breakings/start_time', [BreakingController::class,'start_time'])->name('breaking.start');
-    Route::patch('Breakings/end_time', [BreakingController::class,'end_time'])->name('breaking.end');
+    Route::post('Works/punchin', [WorkController::class,'punchin'])->name('work.punchin');
+    Route::patch('Works/punchout', [WorkController::class,'punchout'])->name('work.punchout');
+    Route::post('Breakings/start_time', [BreakingController::class,'start_time'])->name('breaking.start_time');
+    Route::patch('Breakings/end_time', [BreakingController::class,'end_time'])->name('breaking.end_time');
 
 
 

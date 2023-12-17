@@ -18,8 +18,8 @@ class CreateWorksTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             
             $table->date('work_date');
-            $table->time('start_time');
-            $table->time('end_time')->nullable();
+            $table->time('punchin');
+            $table->time('punchout')->nullable();
             $table->timestamps();
 
              $table->foreign('user_id')->references('id')->on('users');
