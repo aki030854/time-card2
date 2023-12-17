@@ -13,7 +13,7 @@ class BreakingController extends Controller
     public function start_time()
     {
         //$user = Auth::user();
-        $work = Work::all();
+        $work = Work::where('id')->find();
         
         $newBreakingDay = Carbon::today();
 
@@ -40,7 +40,7 @@ class BreakingController extends Controller
     public function end_time()
     {
         //$user = Auth::user();
-        $work = Work::all();
+        $work = Work::where('id')->find();
         $breaking = Breaking::where('work_id', $work->id)->latest()->first();
 
        // if( !empty($oldbreaking->end_time)) {
