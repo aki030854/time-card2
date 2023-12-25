@@ -15,7 +15,7 @@ class CreateBreakingsTable extends Migration
     {
         Schema::create('breakings', function (Blueprint $table) {
             $table->increments('id');
-           $table->integer('work_id')->unsigned();
+           $table->integer('work_id')->unsigned()->index();
             $table->time('start_time');
             $table->time('end_time')->nullable();
             $table->timestamps();

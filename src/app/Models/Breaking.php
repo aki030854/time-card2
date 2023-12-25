@@ -12,6 +12,6 @@ class Breaking extends Model
 
      public function work()
     {
-        $this->belongsTo(Work::class);
+        return $this->belongsTo(Work::class);
     }
 }

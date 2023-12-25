@@ -14,4 +14,9 @@ class Work extends Model
     {
         $this->belongsTo(User::class);
     }
+
+     public function breaking()
+    {
+        return $this->hasOne(Breaking::class);
+    }
 }

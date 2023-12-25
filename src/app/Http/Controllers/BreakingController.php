@@ -10,51 +10,70 @@ use App\Models\Breaking;
 
 class BreakingController extends Controller
 {
-    public function start_time()
+     public function start_time()
     {
-        //$user = Auth::user();
-        $work = Work::where('id')->find();
+        // ログイン中のユーザーを取得
+        $user = Auth::user();
+
+        // 今日の日付と時間を取得
+        $today = Carbon::now();
         
-        $newBreakingDay = Carbon::today();
+        // ログイン中のユーザーが今日取得したworkのidを取得
+        $workId = $user->works()
+            ->whereDate('created_at', $today->toDateString())
+            ->value('id');
 
-        
+        // 休憩開始ボタンが押された時点の時間を取得
+        $startTime = $today->toDateTimeString();
 
-         //if(empty($oldWork->start_time)) {
-           // return redirect()->back()->with('error', '出勤打刻がされていません');
-        // }
+        // Breaking モデルを使用して新しい休憩データを作成
+        $breaking = new Breaking();
+        $breaking->work_id = $workId;
+        $breaking->start_time = $startTime;
+        $breaking->save();
 
-          //if(empty($oldWork->end_time)) {
-           // return redirect()->back()->with('error', 'すでに退勤打刻がされています');
-        //  }
+        // 成功時の処理などを追加する場合はここに追加
 
-      
-
-      $breaking = new Breaking();
-      $breaking->work_id=$work->id;
-      $breaking->start_time=Carbon::now();
-      $breaking->save();
-
-        return redirect()->back()->with('my_status', '休憩開始打刻が完了しました');
+        return redirect()->back()->with('success', '休憩を開始しました。');
     }
+
+        
+    
 
     public function end_time()
     {
-        //$user = Auth::user();
-        $work = Work::where('id')->find();
-        $breaking = Breaking::where('work_id', $work->id)->latest()->first();
+        // ログイン中のユーザーを取得
+        $user = Auth::user();
 
-       // if( !empty($oldbreaking->end_time)) {
-           // return redirect()->back()->with('error', '既に休憩終了打刻をされています');
-        //}
-        $breaking->update([
-            'end_time' => Carbon::now()
-        
-        ]);
-        
+        // 今日の日付と時間を取得
+        $today = Carbon::now();
 
-    
+        // ログイン中のユーザーが今日取得したworkのidを取得
+        $workId = $user->works()
+            ->whereDate('created_at', $today->toDateString())
+            ->value('id');
 
-        return redirect()->back()->with('my_status', '休憩終了打刻が完了しました');
+        // 休憩終了ボタンが押された時点の時間を取得
+        $endTime = $today->toDateTimeString();
+
+        // 最新の休憩データを取得
+        $breaking = Breaking::where('work_id', $workId)
+            ->latest() // 最新のものを取得
+            ->first();
+
+        // 休憩データが存在する場合、end_timeを更新
+        if ($breaking) {
+            $breaking->end_time = $endTime;
+            $breaking->save();
+            
+            // 成功時の処理などを追加する場合はここに追加
+
+            return redirect()->back()->with('success', '休憩を終了しました。');
+        }
+
+        // 休憩データが存在しない場合の処理などを追加する場合はここに追加
+
+        return redirect()->back()->with('error', '休憩データが見つかりませんでした。');
     }
 }
 

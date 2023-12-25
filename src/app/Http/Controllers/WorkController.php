@@ -16,54 +16,63 @@ class WorkController extends Controller
         
         /**
          * 打刻は1日一回までにしたい 
-         * DB
+         * 
          */
-        $oldWork = Work::where('user_id', $user->id)->latest()->first();
-        
-        $oldWorkDay = NULL;
-        if ($oldWork) {
-            $oldWorkpunchin = new Carbon($oldWork->punchin);
-            $oldWorkDay = $oldWorkpunchin->startOfDay();
+       $today = Carbon::now()->toDateString();
+
+        // 今日の日付で既に出勤データが存在するか確認
+        $existingWork = $user->works()->whereDate('created_at', $today)->first();
+
+        // 既にデータが存在する場合はエラーを返す
+        if ($existingWork) {
+            return redirect()->back()->with('error', '今日は既に出勤しています。');
         }
 
-        $newWorkDay = Carbon::today();
-        
-        /**
-         * 日付を比較する。同日付の出勤打刻で、かつ直前のTimestampの退勤打刻がされていない場合エラーを吐き出す。
-         */
-        if ($oldWorkDay == $newWorkDay){
-            if(empty($oldWork->end_time)) {
-            return redirect()->back()->with('error', 'すでに出勤打刻がされています');
-        }else{
-             return redirect()->back()->with('error', 'すでに退勤済みです');
-        }
-           
-        }
+        // 出勤ボタンが押された時点の時間を取得
+        $work_date = Carbon::now();
 
-        
+        // 出勤ボタンが押された時点の時間を取得
+        $punchin = Carbon::now()->toDateTimeString();
 
-      $work = new Work();
-      $work->user_id=$user->id;
-      $work->work_date=Carbon::now();
-      $work->punchin=Carbon::now();
-      $work->save();
+        // 新しい出勤データを作成・保存
+        $work = new Work();
+        $work->user_id = $user->id;
+        $work->work_date = $work_date;
+        $work->punchin = $punchin;
+        $work->save();
 
-        return redirect()->back()->with('my_status', '出勤打刻が完了しました');
+        return redirect()->back()->with('success', '出勤しました。');
     }
 
     public function punchout()
     {
+        // ログイン中のユーザーを取得
         $user = Auth::user();
-        $work = Work::where('user_id', $user->id)->latest()->first();
 
-        if( !empty($oldwork->punchout)) {
-            return redirect()->back()->with('error', '既に退勤の打刻がされているか、出勤打刻されていません');
+        // 今日の日付を取得
+        $today = Carbon::now()->toDateString();
+
+        // 今日の日付で既に退勤データが存在するか確認
+        $existingWork = $user->works()->whereDate('created_at', $today)->first();
+
+        // 既にデータが存在しない場合はエラーを返す
+        if (!$existingWork) {
+            return redirect()->back()->with('error', '今日はまだ出勤していません。');
         }
-        $work->update([
-            'punchout' => Carbon::now()
-        ]);
 
-        return redirect()->back()->with('my_status', '退勤打刻が完了しました');
+        // 退勤ボタンが押された時点の時間を取得
+        $punchout = Carbon::now()->toDateTimeString();
+
+        // 既に退勤している場合はエラーを返す
+        if ($existingWork->punchout_time) {
+            return redirect()->back()->with('error', '今日は既に退勤しています。');
+        }
+
+        // 退勤データを更新・保存
+        $existingWork->punchout = $punchout;
+        $existingWork->save();
+
+        return redirect()->back()->with('success', '退勤しました。');
     }
 }
  
