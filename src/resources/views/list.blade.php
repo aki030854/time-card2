@@ -9,52 +9,39 @@
  <header>
 <h1>Atte</h1>
  <nav>
-   <a href="#">ホーム</a>
-   <a href="">日付一覧</a>
-   <form method="POST" action="{{ route('logout') }}">
-   @csrf
-      <button type="submit">ログアウト</button>
-    </form>
-   </nav>
+   <a href="home">ホーム</a>
+   <a href="#">日付一覧</a>
+   <a href="{{ route('logout') }}">ログアウト</a>
+  </nav>
  <body>
      <main>
-         <h1>日別一覧</h1>
-         <form class="form">
-        <div class="confirm-table">
-          <table class="confirm-table__inner">
-            <tr>
-              <th>名前</th><th>勤務開始</th><th>勤務終了</th><th>休憩時間</th><th>勤務時間</th>
-            </tr>
-            <tr>
-              <td class="list-table__text">
-               
-              @foreach($users as $user)
-                 <article>
-                     <p>{{ $user->name }}</p>
-                 </article>
-                @endforeach;
-                
-              </td>
-              <td class="list-table__text">
-                @foreach($works as $work)
-                 <article>
-                     <p>{{ $work->punchin }}</p>
-                 </article>
-                @endforeach
-              </td>
-              <td class="list-table__text">
-                @foreach($works as $work)
-                 <article>
-                     <p>{{ $work->puchout }}</p>
-                 </article>
-                @endforeach
-              </td>
-              <td>(休憩時間total)</td>
-              <td>(勤務時間total) $work_time_sec = strtotime($punchout)-strtotime($punchin);              //退勤時間から開始時間を引いて、勤務時間(秒)を求める</td>
-            </tr>
-          </table>
-        </div>
-      </form>
+         <h1>{{ $targetDate->format('n月j日') }}</h1>
+
+<table>
+    <tr>
+        <th>名前</th>
+        <th>勤務開始</th>
+        <th>勤務終了</th>
+        <th>休憩時間</th>
+        <th>勤務時間</th>
+    </tr>
+    @foreach($userWorkStatus as $status)
+        <tr>
+            <td>{{ $status->name }}</td>
+            <td>{{ $status->punchin_time }}</td>
+            <td>{{ $status->punchout_time }}</td>
+            <td>{{ $status->total_break_time }}</td>
+            <td>{{ $status->total_work_time }}</td>
+        </tr>
+    @endforeach
+</table>
+
+{{ $userWorkStatus->links() }}
+
+<div>
+    <a href="{{ route('list.index', ['date' => $targetDate->subDay()->format('Y-m-d')]) }}"><</a>
+    <a href="{{ route('list.index', ['date' => $targetDate->addDay()->format('Y-m-d')]) }}">></a>
+</div>
  
      </main>
  
@@ -64,18 +51,3 @@
  </body>
  
  </html>
-2
-3
-4
-5
-6
-7
-8
-@foreach($users as $user)
-  <table>
-    <tr>
-      <td>{{$user->name}}</td>
-      <td>{{$user->email}}</td>
-    </tr>
-  </table>
-@endforeach

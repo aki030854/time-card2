@@ -26,9 +26,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('Works/punchout', [WorkController::class,'punchout'])->name('work.punchout');
     Route::post('Breakings/start_time', [BreakingController::class,'start_time'])->name('breaking.start_time');
     Route::patch('Breakings/end_time', [BreakingController::class,'end_time'])->name('breaking.end_time');
-
-
-
 });
+
+Route::get('list', 'ListController@index')->name('list.index');
 
 

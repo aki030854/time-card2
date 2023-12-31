@@ -13,7 +13,7 @@
 <h1>Atte</h1>
  <nav>
    <a href="#">ホーム</a>
-   <a href="">日付一覧</a>
+   <a href="{{ route('list.index') }}">日付一覧</a>
    <form method="POST" action="{{ route('logout') }}">
    @csrf
       <button type="submit">ログアウト</button>
