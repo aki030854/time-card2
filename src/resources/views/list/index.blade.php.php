@@ -11,7 +11,8 @@
  <nav>
    <a href="home">ホーム</a>
    <a href="#">日付一覧</a>
-   <a href="{{ route('logout') }}">ログアウト</a>
+  <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    ログアウト</a>
   </nav>
  <body>
      <main>

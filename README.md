@@ -23,9 +23,24 @@ Laravel 8.x, html,css, PHP 7.4.9 (cli)
 
 
 #テストユーザー
-名前　    一ノ瀬　ミヤ  
+名前　    一ノ瀬　ミヤ 
+id 1 
 e-mail   test@gmail.com 
 password 1357913579
+
+名前　二見　浩一
+id 2
+e-mail   aaa@yahoo.co.jp
+password 24682468
+
+名前　三橋　香織
+id 3
+e-mail kaori36@example.net
+password 12457836
+
+hoge
+tesuo@yahoo.co.jp
+975312468
    
 　
 
