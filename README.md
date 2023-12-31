@@ -4,6 +4,9 @@
 初級模擬案件課題として
 勤怠管理を円滑に行えるようにする為
 
+##アプリケーションURL
+https://github.com/aki030854/time-card2.git
+
 ##機能一覧
 ログイン機能、会員登録機能、打刻機能
 
@@ -38,9 +41,10 @@ id 3
 e-mail kaori36@example.net
 password 12457836
 
-hoge
-tesuo@yahoo.co.jp
-975312468
+名前　hoge
+id 4
+e-mail tesuo@yahoo.co.jp
+password 975312468
    
 　
 
